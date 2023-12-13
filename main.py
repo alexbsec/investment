@@ -30,7 +30,10 @@ def portfolio_cli(portfolio, file_name):
             names = [investment.name for investment in portfolio.wallet.investments]
             idx = add_value_to(names)
             value = float(input("What is your current asset value? "))
-            portfolio.wallet.investments[idx].feed_info(value)
+            date = input("Date of change in YYYY-MM-DD? ")
+            if date == "":
+                date = datetime.now().strftime("%Y-%m-%d")
+            portfolio.wallet.investments[idx].feed_info(value, date)
             portfolio.wallet.save(file_name)
         elif choice == "4":
             print("Exiting...")
@@ -40,7 +43,9 @@ def create_investment():
     name = input("Enter the name of the investment: ")
     risk = input("Enter the risk level of the investment (High/Low/Medium): ")
     invested = float(input("Enter the amount invested: "))
-    started_at = datetime.now().strftime("%Y-%m-%d")  # Assuming current date as the start date
+    started_at = input("Date of change in format YY-MM-DD: ")
+    if started_at == "":
+        started_at = datetime.now().strftime("%Y-%m-%d")  # Assuming current date as the start date
 
     return inv.Investment(name, risk, invested, started_at)
 
