@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import matplotlib.dates as mdates
 import numpy as np
+import mplcursors as mpc
 from datetime import datetime
 import pickle
 
@@ -78,6 +79,10 @@ class Wallet:
         plt.ylabel('Investment Value')
         plt.legend()
         plt.gcf().autofmt_xdate()  # Auto-format the x-axis dates
+        cursor = mpc.cursor(hover=True)
+        cursor.connect("add", lambda sel: sel.annotation.set_text(
+             f'Date: {mdates.num2date(sel.target[0]).strftime("%Y-%m-%d")}\nValue: R$ {sel.target[1]:.2f}'
+        ))
         plt.show()
 
     def plot_trends(self):
@@ -103,6 +108,10 @@ class Wallet:
         plt.ylabel('Trend')
         plt.legend()
         plt.gcf().autofmt_xdate()  # Auto-format the x-axis dates
+        cursor = mpc.cursor(hover=True)
+        cursor.connect("add", lambda sel: sel.annotation.set_text(
+            f'Date: {mdates.num2date(sel.target[0]).strftime("%Y-%m-%d")}\nPercentage: {sel.target[1]:.2f}%'
+        ))
         plt.show()
 
     def save(self, db_name):
