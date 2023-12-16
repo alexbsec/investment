@@ -41,9 +41,11 @@ class Portfolio:
             with open(f'{self.path_to_db}/{self.file_name}.pkl', 'rb') as file:
                 self.investments = pickle.load(file)
             self.wallet = Wallet(self.investments)
+            return True
         except (FileNotFoundError, pickle.UnpicklingError) as e:
             print(f"Error loading file: {e}")
-            self.wallet = Wallet([])  
+            self.wallet = Wallet([])
+            return False
     
 
 class Wallet:

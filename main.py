@@ -52,7 +52,10 @@ def create_investment():
 def load_portfolio():
     portfolio_name = input("Enter the name of the portfolio to load: ")
     portfolio = inv.Portfolio(portfolio_name)
-    portfolio.read()
+    read = portfolio.read()
+    if not read:
+        portfolio = None
+        portfolio_name = None
     return portfolio, portfolio_name
 
 def main(): 
